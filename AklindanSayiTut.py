@@ -22,39 +22,40 @@
 # 			 Pc'nin tahmini = 56
 # 			 Kullanicinin inputu = "Enter"
 
+
 oyuna_basla=input("Aklinizdan 0-100 arasi sayi tutun. Hazirsaniz baslamak icin 1e basin:")
 import random
 buyukmu=''
 #kullanicidan alacagimiz inputu aktaracagimiz degisken
 sayac=0
 #programin sayiyi kacinci denemede bilecegini hesaplayacagimiz sayac
-
+sayi1=0
+sayi2=100
+tahminler=[]
 if oyuna_basla=="1":
     while True:
-        if buyukmu=="":
-            sayi = random.randint(1, 100)
-            print("Tahmin ettiginiz sayi bu mu ? {} ".format(sayi))
-            buyukmu = input("Tahmin ettiginiz sayi daha kucuk ise - daha buyuk ise + ya basin. Dogru ise d ye basin :")
-            sayac+=1
-        elif buyukmu == "-":
-            sayi = random.randint(1, sayi)
-            #kullanici - girerse yani aklimdaki sayi daha kucuk derse,1 ile onceki rastgele sayi arasinda yeni bir sayi olusturuyoruz
-            print("Tahmin ettiginiz sayi bu mu ? {} ".format(sayi))
-            buyukmu = input("Tahmin ettiginiz sayi daha kucuk ise - daha buyuk ise + ya basin. Dogru ise d ye basin :")
-            sayac+=1
+        tahmin = random.randrange(sayi1, sayi2)
+        print("Tahmin ettiginiz sayi bu mu ? {} ".format(tahmin))
+        buyukmu = input("Tahmin ettiginiz sayi daha kucuk ise - daha buyuk ise + ya basin. Dogru ise d ye basin :")
+        sayac += 1
+
+        if tahmin in tahminler: #tahmin edilenler ilstesinde ise sayac 1 azaltilip tekrar random bir sayi olusturuluyor
+            sayac-=1
             continue
-        elif buyukmu == "+":
-            sayi = random.randint(sayi, 100)
-            #kullanici + girerse yani aklimdaki sayi daha buyuk derse,onceki rastgele sayi ile 100 arasinda yeni bir sayi olusturuyoruz
-            print("Tahmin ettiginiz sayi bu mu ? {} ".format(sayi))
-            buyukmu = input("Tahmin ettiginiz sayi daha kucuk ise - daha buyuk ise + ya basin. Dogru ise d ye basin :")
-            sayac+=1
-            continue
-        elif buyukmu=="d":
-            #kullanicinin aklindaki sayiyi bulursak programdan cikiliyor
-            print("Tahmin ettiginiz sayiyi {}. denemede bildim..".format(sayac))
-            break
+        else:
+            tahminler.append(tahmin)
+            print(tahminler)
+            if buyukmu == "-":
+                sayi2 = tahmin
+                # kullanici - girerse yani aklimdaki sayi daha kucuk derse,1 ile onceki rastgele sayi arasinda yeni bir sayi olusturuyoruz
+                continue
+            elif buyukmu == "+":
+                sayi1 = tahmin
+                # kullanici + girerse yani aklimdaki sayi daha buyuk derse,onceki rastgele sayi ile 100 arasinda yeni bir sayi olusturuyoruz
+                continue
+            elif buyukmu == "d":
+                # kullanicinin aklindaki sayiyi bulursak programdan cikiliyor
+                print("Tahmin ettiginiz sayiyi {}. denemede bildim..".format(sayac))
+                break
 else:
     print("Oyundan cikiliyor.. Gule gule..")
-
-
